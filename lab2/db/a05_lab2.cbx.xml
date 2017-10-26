@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<LOG_ROOT>
+	<PROJECT NAME="a05_lab2">
+		<CBX_INST_ENTRY INSTANCE_NAME="|a05_RANDU|addsub:lpm_adder_1|lpm_add_sub:lpm_add_sub_component" CBX_FILE_NAME="add_sub_l4i.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|a05_RANDU|addsub:lpm_adder_2|lpm_add_sub:lpm_add_sub_component" CBX_FILE_NAME="add_sub_l4i.tdf"/>
+	</PROJECT>
+</LOG_ROOT>

@@ -1,0 +1,76 @@
+-- this circuit implements the IBM RANDU version of a linear congruential generator
+--
+-- entity name: a05_RANDU
+--
+-- Copyright (C) 2017 Alexander Reiff, Antoine Pacarar
+-- Version 1.0
+-- Author: Alexander Reiff, Antoine Pacarar; alexander.reiff@mail.mcgill.ca, antoine.pacarar@mail.mcgill.ca
+-- Date: 10/11/2017
+
+library ieee;
+use ieee.std_logic_1164.all;
+
+
+library lpm;
+use lpm.lpm_components.all;
+
+entity a05_RANDU is
+ port ( seed : in std_logic_vector(15 downto 0);
+--	test1 : out std_logic_vector(32 downto 0) ;
+--	test2 : out std_logic_vector(32 downto 0) ;
+--	testC : out std_logic_vector(32 downto 0) ;
+--	testD : out std_logic_vector(32 downto 0) ;
+	rand : out std_logic_vector(30 downto 0) );
+end a05_RANDU;
+
+architecture structural of a05_RANDU is
+	signal result1 : std_logic_vector(32 downto 0);
+	signal result2 : std_logic_vector(32 downto 0);
+	signal cout1 : std_logic;
+	signal cout2 : std_logic;
+	-- component declaration
+	component addsub
+	PORT (dataa, datab : IN std_logic_vector(32 DOWNTO 0) ;
+		result : OUT std_logic_vector(32 DOWNTO 0) ;
+		cout : OUT std_logic);
+	end component;
+	
+	-- interna signals
+	signal dataa : std_logic_vector(32 DOWNTO 0):= (OTHERS => '0');
+	signal datab : std_logic_vector(32 DOWNTO 0):= (OTHERS => '0');
+	signal datac : std_logic_vector(32 DOWNTO 0):= (OTHERS => '0');
+	signal datad : std_logic_vector(32 DOWNTO 0):= (OTHERS => '0');
+	
+	begin
+		lpm_adder_1: addsub
+		port map(
+			dataa => dataa,
+			datab => datab,
+			result => result1,
+			cout => cout1
+		);
+			
+		dataa(16 downto 1) <= seed;
+		datab(15 downto 0) <= seed;
+		
+		--test1 <= result1;
+		
+		lpm_adder_2: addsub
+		port map(
+			dataa => datac,
+			datab => datad,
+			result => result2,
+			cout => cout2
+		);
+		
+		datac <= result1;
+		datad(31 downto 16) <= seed;
+		
+		--testC <= datac;
+		--testD <= datad;
+		
+		--test2 <= result2;
+		
+		rand(30 downto 0) <= result2 (30 downto 0);
+	end structural;
+	  
